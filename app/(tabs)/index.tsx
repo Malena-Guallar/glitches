@@ -1,6 +1,7 @@
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
+import { Image } from "expo-image";
 import React, { useRef, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const CameraScreen = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -9,7 +10,7 @@ const CameraScreen = () => {
   const [facing, setFacing] = useState<CameraType>("back");
 
   if (!permission) {
-    return null;
+    return <View />;
   }
 
   if (!permission.granted) {
@@ -21,21 +22,78 @@ const CameraScreen = () => {
     );
   }
 
-  const takePicture = async () => {
-    const photo = await ref.current?.takePictureAsync();
-    if (photo?.uri) setUri(photo.uri);
+  const toggleFacing = () => {
+    setFacing((current) => (current === "back" ? "front" : "back"));
   };
 
-  const toggleFacing = () => {
-    setFacing((prev) => (prev === "back" ? "front" : "back"));
+  const takePicture = async () => {
+    const photo = await ref.current?.takePictureAsync();
+    if (photo?.uri) {
+      setUri(photo.uri);
+    }
   };
 
   return (
-    <View>
-      <Text>Camera screen</Text>
-      <Button title="Take picture"></Button>
+    <View style={styles.container}>
+      {uri ? (
+        <View>
+          <Image
+            source={{ uri }}
+            style={{ width: 300, aspectRatio: 1 }}
+          />
+          <Button onPress={() => setUri(null)} title="Take another pic" />
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <CameraView
+            style={styles.camera}
+            facing={facing}
+            ref={ref}
+            mode="picture"
+          />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleFacing}>
+              <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
+              <Text style={styles.text}>take pic</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  message: {
+    textAlign: "center",
+    paddingBottom: 10,
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 64,
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    width: "100%",
+    paddingHorizontal: 64,
+  },
+  button: {
+    flex: 1,
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+  },
+});
 
 export default CameraScreen;
