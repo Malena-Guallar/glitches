@@ -1,5 +1,6 @@
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -8,6 +9,7 @@ const CameraScreen = () => {
   const ref = useRef<CameraView>(null);
   const [uri, setUri] = useState<string | null>(null);
   const [facing, setFacing] = useState<CameraType>("back");
+  const router = useRouter();
 
   if (!permission) {
     return <View />;
@@ -30,6 +32,10 @@ const CameraScreen = () => {
     const photo = await ref.current?.takePictureAsync();
     if (photo?.uri) {
       setUri(photo.uri);
+      router.push({
+        pathname: "/editor",
+        params: { photoUri: photo.uri },
+      });
     }
   };
 
@@ -37,10 +43,7 @@ const CameraScreen = () => {
     <View style={styles.container}>
       {uri ? (
         <View>
-          <Image
-            source={{ uri }}
-            style={{ width: 300, aspectRatio: 1 }}
-          />
+          <Image source={{ uri }} style={{ width: 300, aspectRatio: 1 }} />
           <Button onPress={() => setUri(null)} title="Take another pic" />
         </View>
       ) : (
