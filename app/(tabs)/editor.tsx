@@ -1,13 +1,16 @@
 import GlitchImage from "@/assets/GlitchImage";
+import Slider from "@react-native-community/slider";
 import { useKeepAwake } from "expo-keep-awake";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 const EditorScreen = () => {
   useKeepAwake();
   const { photoUri } = useLocalSearchParams<{ photoUri?: string }>();
   const router = useRouter();
+
+  const [slices, setSlices] = useState<number>(100);
 
   if (!photoUri) {
     return (
@@ -20,8 +23,13 @@ const EditorScreen = () => {
 
   return (
     <View style={styles.container}>
-      <GlitchImage uri={photoUri} slices={200} />
-
+      <GlitchImage uri={photoUri} slices={slices} />
+      <Slider
+        style={{ width: 200, height: 40 }}
+        minimumValue={0}
+        maximumValue={1}
+        minimumTrackTintColor="#FFFFFF"
+      />
       <Button title="Back to camera" onPress={() => router.push("/")} />
     </View>
   );

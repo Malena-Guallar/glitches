@@ -7,9 +7,12 @@
     "icon": "./assets/images/icon.png",
     "scheme": "glitchesproject",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Give $(PRODUCT_NAME) permission to access your photos",
+        "NSPhotoLibraryAddUsageDescription": "Give $(PRODUCT_NAME) permission to save photos"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,10 +24,9 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "permissions": [
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
-        "android.permission.READ_MEDIA_IMAGES"
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.ACCESS_MEDIA_LOCATION"
       ],
       "package": "com.malenamalenita.glitches_project"
     },
@@ -39,10 +41,7 @@
         {
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
-          "isAccessMediaLocationEnabled": false,
-          "granularPermissions": [
-            "photo"
-          ]
+          "isAccessMediaLocationEnabled": true
         }
       ],
       [
