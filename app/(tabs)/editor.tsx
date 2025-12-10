@@ -10,7 +10,8 @@ const EditorScreen = () => {
   const { photoUri } = useLocalSearchParams<{ photoUri?: string }>();
   const router = useRouter();
 
-  const [slices, setSlices] = useState<number>(100);
+  const [slices, setSlices] = useState<number>(10);
+  const [pendingSlices, setPendingSlices] = useState<number>(0);
 
   if (!photoUri) {
     return (
@@ -24,11 +25,16 @@ const EditorScreen = () => {
   return (
     <View style={styles.container}>
       <GlitchImage uri={photoUri} slices={slices} />
+      <Text style={styles.text}>Slices : {pendingSlices}</Text>
       <Slider
-        style={{ width: 200, height: 40 }}
-        minimumValue={0}
-        maximumValue={1}
+        style={{ width: 250, height: 40 }}
+        minimumValue={1}
+        maximumValue={1000}
+        step={1}
         minimumTrackTintColor="#FFFFFF"
+        value={slices}
+        onValueChange={setPendingSlices}
+        onSlidingComplete={(v) => setSlices(Math.floor(v))}
       />
       <Button title="Back to camera" onPress={() => router.push("/")} />
     </View>
