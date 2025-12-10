@@ -1,62 +1,67 @@
 import { Image } from "expo-image";
+import { useKeepAwake } from "expo-keep-awake";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const EditorScreen = () => {
+  useKeepAwake();
   const { photoUri } = useLocalSearchParams<{ photoUri?: string }>();
   const router = useRouter();
 
-  const [effect, setEffect] = useState<"none" | "rgb" | "pixel" | "blur">(
-    "none"
-  );
+  const [effect, setEffect] = useState<"none" | "rgb" | "pixel" | "blur">("none");
 
   if (!photoUri) {
     return (
       <View style={styles.center}>
-        <Text style={styles.text}>no photo provided</Text>
+        <Text style={styles.text}>No photo provided</Text>
         <Button title="Go back" onPress={() => router.back()} />
       </View>
     );
   }
 
-  const applyEffect = (type: typeof effect) => {
-    setEffect(type);
+  const applyEffect = (type: typeof effect) => setEffect(type);
+
+  const getEffectStyle = (): any => {
+    switch (effect) {
+      case "rgb":
+        return { tintColor: "rgba(255,0,0,0.2)" }; // simple overlay pour simuler RGB shift
+      case "pixel":
+        return { transform: [{ scale: 0.95 }] }; // effet visuel très simple pour pixelate
+      case "blur":
+        return { blurRadius: 10 }; // fonctionnera sur iOS, simule flou sur Android via overlay
+      default:
+        return {};
+    }
   };
 
   return (
-    <View>
-      <Text>editor</Text>
-      <Image
-        source={{ uri: photoUri }}
-        style={styles.image}
-        contentFit="contain"
-        transition={300}
-        blurRadius={effect === "blur" ? 12 : 0}
-      ></Image>
-      <View style={styles.buttons}>
-        <TouchableOpacity
-          onPress={() => applyEffect("none")}
-          style={styles.btn}
-        >
-          <Text>No Effect</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => applyEffect("rgb")} style={styles.btn}>
-          <Text>RGB Shift</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => applyEffect("pixel")}
-          style={styles.btn}
-        >
-          <Text>Pixelate</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => applyEffect("blur")}
-          style={styles.btn}
-        >
-          <Text>Blur</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.imageWrapper}>
+        <Image
+          source={{ uri: photoUri }}
+          style={[styles.image, getEffectStyle()]}
+          contentFit="contain"
+          transition={300}
+        />
+        {/* Overlay pour simuler le flou sur Android */}
+        {effect === "blur" && (
+          <View style={styles.blurOverlay} pointerEvents="none" />
+        )}
       </View>
+
+      <View style={styles.buttons}>
+        {["none", "rgb", "pixel", "blur"].map((e) => (
+          <TouchableOpacity
+            key={e}
+            onPress={() => applyEffect(e as typeof effect)}
+            style={styles.btn}
+          >
+            <Text>{e}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <Button title="Back to camera" onPress={() => router.push("/")} />
     </View>
   );
@@ -68,15 +73,20 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     alignItems: "center",
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  image: {
+  imageWrapper: {
     width: "90%",
     height: 400,
-    backgroundColor: "#000",
     borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "#000",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  blurOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255,255,255,0.2)", // effet visuel de flou
   },
   buttons: {
     flexDirection: "row",
