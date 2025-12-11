@@ -1,13 +1,14 @@
+import GlitchText from "@/assets/GlitchText";
 import BaseButton from "@/components/ui/base-button";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const HomeScreen = () => {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>GLITCHES</Text>
+      <GlitchText text="GLITCHES" fontSize={40} />
 
       <BaseButton
         title="Open camera"
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    gap: 20
   },
   title: {
     fontSize: 24,
