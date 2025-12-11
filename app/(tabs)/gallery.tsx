@@ -9,11 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const GalleryScreen = () => {
   const router = useRouter();
   const [permission, requestPermission] = MediaLibrary.usePermissions();
   const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (!permission || !permission.granted) {
@@ -55,7 +57,7 @@ const GalleryScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: 50}]}>
       <FlatList
         data={photos}
         numColumns={3}
@@ -75,7 +77,7 @@ const GalleryScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#000" },
+  container: { backgroundColor: "#000" },
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   thumbnail: {
     width: 120,

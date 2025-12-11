@@ -1,13 +1,15 @@
 import GlitchText from "@/assets/GlitchText";
 import BaseButton from "@/components/ui/base-button";
+import { useTheme } from "@/theme/ThemeProvider";
 import { useRouter } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 const HomeScreen = () => {
   const router = useRouter();
+  const theme = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={theme.screens}>
       <GlitchText text="GLITCHES" fontSize={40} />
 
       <BaseButton
@@ -22,19 +24,5 @@ const HomeScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 40,
-    color: "#fff",
-  },
-});
 
 export default HomeScreen;

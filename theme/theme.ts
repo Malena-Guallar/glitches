@@ -9,22 +9,7 @@ export const theme = {
     text: "#ffffff",
     textSecondary: "#9e9e9e",
     border: "#333",
-  },
-
-  // spacing: {
-  //   xs: 4,
-  //   sm: 8,
-  //   md: 16,
-  //   lg: 24,
-  //   xl: 32,
-  // },
-
-  // radius: {
-  //   sm: 6,
-  //   md: 12,
-  //   lg: 20,
-  //   full: 999,
-  // },
+  } as ViewStyle,
 
   typography: {
     title: {
@@ -40,6 +25,18 @@ export const theme = {
       fontWeight: "400",
     },
   },
+
+  backgroundColor: {
+    backgroundColor: "#0d0d0d",
+  },
+
+  screens: {
+    backgroundColor: "#0d0d0d",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+  } as ViewStyle,
 
   button: {
     container: {
