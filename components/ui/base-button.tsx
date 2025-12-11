@@ -1,5 +1,6 @@
+import { useTheme } from "@/theme/ThemeProvider";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
 interface BaseButtonProps {
   title: string;
@@ -7,28 +8,12 @@ interface BaseButtonProps {
 }
 
 const BaseButton = ({ title, onPress }: BaseButtonProps) => {
+  const theme = useTheme();
   return (
-    <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-      <Text style={styles.buttonText}>{title}</Text>
+    <TouchableOpacity onPress={onPress} style={{...theme.button.container}}>
+      <Text style={{...theme.button.text}}>{title}</Text>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingVertical: 10,
-    backgroundColor: "transparent",
-    width: "50%",
-    borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "#fff"
-  }
-});
 
 export default BaseButton;
