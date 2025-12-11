@@ -1,9 +1,10 @@
 import GlitchImage from "@/assets/GlitchImage";
+import BaseButton from "@/components/ui/base-button";
 import Slider from "@react-native-community/slider";
 import { useKeepAwake } from "expo-keep-awake";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const EditorScreen = () => {
   useKeepAwake();
@@ -17,7 +18,7 @@ const EditorScreen = () => {
     return (
       <View style={styles.center}>
         <Text style={styles.text}>No photo provided</Text>
-        <Button title="Go back" onPress={() => router.back()} />
+        <BaseButton title="Go back" onPress={() => router.back()} />
       </View>
     );
   }
@@ -36,7 +37,7 @@ const EditorScreen = () => {
         onValueChange={setPendingSlices}
         onSlidingComplete={(v) => setSlices(Math.floor(v))}
       />
-      <Button title="Back to camera" onPress={() => router.push("/")} />
+      <BaseButton title="Back to camera" onPress={() => router.push("/camera")} />
     </View>
   );
 };
