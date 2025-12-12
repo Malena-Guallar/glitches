@@ -1,10 +1,11 @@
+import BaseButton from "@/components/ui/base-button";
 import { useTheme } from "@/theme/ThemeProvider";
 import { MaterialIcons } from "@expo/vector-icons";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const CameraScreen = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -20,9 +21,9 @@ const CameraScreen = () => {
 
   if (!permission.granted) {
     return (
-      <View>
-        <Text>we need your permission to use camera</Text>
-        <Button onPress={requestPermission} title="Grant permission" />
+      <View style={theme.screens}>
+        <Text style={theme.textColor}>We need your permission to use camera</Text>
+        <BaseButton onPress={requestPermission} title="Grant permission" />
       </View>
     );
   }
@@ -47,7 +48,7 @@ const CameraScreen = () => {
       {uri ? (
         <View>
           <Image source={{ uri }} style={{ width: 300, aspectRatio: 1 }} />
-          <Button onPress={() => setUri(null)} title="Take another pic" />
+          <BaseButton onPress={() => setUri(null)} title="Take another pic" />
         </View>
       ) : (
         <View style={{...theme.camera.container}}>

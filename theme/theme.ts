@@ -6,25 +6,13 @@ export const theme = {
     surface: "#1a1a1a",
     primary: "#ff006e",
     primaryLight: "#ff66a1",
-    text: "#ffffff",
     textSecondary: "#9e9e9e",
     border: "#333",
   } as ViewStyle,
 
-  typography: {
-    title: {
-      fontSize: 32,
-      fontWeight: "700",
-    },
-    subtitle: {
-      fontSize: 20,
-      fontWeight: "500",
-    },
-    body: {
-      fontSize: 16,
-      fontWeight: "400",
-    },
-  },
+  textColor: {
+    color: "#ffffff",
+  } as TextStyle,
 
   backgroundColor: {
     backgroundColor: "#0d0d0d",
@@ -41,6 +29,7 @@ export const theme = {
   camera: {
     container: {
       flex: 1,
+      backgroundColor: "#0d0d0d",
     } as ViewStyle,
     camera: {
       flex: 1,

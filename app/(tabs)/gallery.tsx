@@ -1,3 +1,5 @@
+import BaseButton from "@/components/ui/base-button";
+import { useTheme } from "@/theme/ThemeProvider";
 import { Image } from "expo-image";
 import * as MediaLibrary from "expo-media-library";
 import { useRouter } from "expo-router";
@@ -16,6 +18,7 @@ const GalleryScreen = () => {
   const [permission, requestPermission] = MediaLibrary.usePermissions();
   const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
   const insets = useSafeAreaInsets();
+  const theme = useTheme();
 
   useEffect(() => {
     if (!permission || !permission.granted) {
@@ -45,19 +48,17 @@ const GalleryScreen = () => {
 
   if (!permission || !permission.granted) {
     return (
-      <View style={styles.center}>
-        <Text style={{ color: "#fff", textAlign: "center" }}>
+      <View style={theme.screens}>
+        <Text style={theme.textColor}>
           You must allow access to your photos
         </Text>
-        <TouchableOpacity onPress={requestPermission} style={styles.button}>
-          <Text>Grant permission</Text>
-        </TouchableOpacity>
+        <BaseButton onPress={requestPermission} title="Grant permission"/>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, {paddingTop: 50}]}>
+    <View style={[theme.screens, {paddingTop: 50}]}>
       <FlatList
         data={photos}
         numColumns={3}
@@ -77,8 +78,6 @@ const GalleryScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "#000" },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
   thumbnail: {
     width: 120,
     height: 120,
