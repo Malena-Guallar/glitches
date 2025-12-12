@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# 📸 Glitches — Photo Glitcher App (Expo + React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Glitches est une application mobile Android permettant de :
+- prendre une photo,
+- sélectionner une image depuis la galerie,
+- lui appliquer un effet glitch dynamique,
+- sauvegarder l'image glitchée sur le téléphone.
 
-## Get started
+_React Native • Expo • TypeScript_
 
-1. Install dependencies
+<p> <img src="https://img.shields.io/badge/Expo- SDK_51-black?logo=expo&style=for-the-badge" /> <img src="https://img.shields.io/badge/React_Native-Mobile-blue?logo=react&style=for-the-badge" /> <img src="https://img.shields.io/badge/TypeScript-Strict-blue?logo=typescript&style=for-the-badge" /> <img src="https://img.shields.io/badge/EAS_Build-Required-important?logo=expo&style=for-the-badge" /> <img src="https://img.shields.io/badge/Platform-Android-lightgreen?logo=android&style=for-the-badge" /> </p>
+<br>
+<br>
 
-   ```bash
-   npm install
-   ```
+## ✨ Fonctionnalités
 
-2. Start the app
+- 📷 Capture photo via appareil (Expo Camera)
+- 🖼️ Sélection depuis la galerie (Media Library)
+- 🎚️ Effet glitch paramétrable (slider interactif)
+- 💾 Sauvegarde locale de l’image glitchée
+- 🧭 Navigation fluide via Expo Router
+- 🎨 Mode thème custom (ThemeProvider)
+- ⚡ Full support Dev Build / EAS Build
+<br>
+<br>
 
-   ```bash
-   npx expo start
-   ```
+## 📦 Stack technique
 
-In the output, you'll find options to open the app in a
+- Expo SDK
+- React Native + TypeScript
+- expo-router
+- expo-camera
+- expo-media-library
+- expo-file-system
+- react-native-view-shot
+- @react-native-community/slider
+<br>
+<br>
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🚀 Installation & Lancement du projet
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+### 1. Cloner le projet
+```
+git clone https://github.com/Malena-Guallar/glitches.git
+cd glitches
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Installer les dépendances
+```
+npm install
+# ou
+yarn install
+```
 
-## Learn more
+### 3. Télécharger l’APK ici et l'installer sur le téléphone :
+[Cliquer ici](https://www.swisstransfer.com/d/2e178545-da08-4af2-ab3c-6991631a4ce2)
 
-To learn more about developing your project with Expo, look at the following resources:
+### 4. Démarrer le projet
+```
+npx expo start
+```
+Scanner le QR code depuis l'app installée sur le téléphone.
+<br>
+<br>
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Architecture du projet
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+📦 glitches/
+ ┣ 📁 app/
+ ┃ ┣ 📁 (tabs)/
+ ┃ ┃ ┣ _layout.tsx
+ ┃ ┃ ┣ camera.tsx
+ ┃ ┃ ┣ editor.tsx
+ ┃ ┃ ┣ gallery.tsx
+ ┃ ┃ ┗ index.tsx
+ ┃ ┗ _layout.tsx
+ ┣ 📁 components/
+ ┃ ┗ ui/base-button.tsx
+ ┣ 📁 theme/
+ ┃ ┣ ThemeProvider.tsx
+ ┃ ┗ theme.ts
+ ┣ 📁 assets/
+ ┃ ┣ GlitchText.tsx
+ ┃ ┗ GlitchImage.tsx
+ ┣ app.json
+ ┣ eas.json
+ ┣ package.json
+ ┗ README.md
+```
