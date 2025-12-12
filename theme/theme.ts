@@ -62,6 +62,15 @@ export const theme = {
     } as ViewStyle,
   },
 
+  gallery: {
+    thumbnail: {
+      width: 120,
+      height: 120,
+      margin: 2,
+      borderRadius: 4,
+    },
+  },
+
   button: {
     container: {
       display: "flex",

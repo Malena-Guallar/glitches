@@ -2,7 +2,6 @@ import BaseButton from "@/components/ui/base-button";
 import { useTheme } from "@/theme/ThemeProvider";
 import { MaterialIcons } from "@expo/vector-icons";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -45,14 +44,8 @@ const CameraScreen = () => {
 
   return (
     <View style={{...theme.camera.container}}>
-      {uri ? (
-        <View>
-          <Image source={{ uri }} style={{ width: 300, aspectRatio: 1 }} />
-          <BaseButton onPress={() => setUri(null)} title="Take another pic" />
-        </View>
-      ) : (
         <View style={{...theme.camera.container}}>
-          <CameraView
+          <CameraView 
             style={{...theme.camera.camera}}
             facing={facing}
             ref={ref}
@@ -76,7 +69,6 @@ const CameraScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
-      )}
     </View>
   );
 };

@@ -6,10 +6,9 @@ import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,12 +20,10 @@ const GalleryScreen = () => {
   const theme = useTheme();
 
   useEffect(() => {
-    if (!permission || !permission.granted) {
-      requestPermission();
-      return;
+    if (permission === null) return;
+    if (permission.granted) {
+      loadPhotos();
     }
-
-    loadPhotos();
   }, [permission]);
 
   const loadPhotos = async () => {
@@ -45,51 +42,43 @@ const GalleryScreen = () => {
     });
   };
 
-
-  if (!permission || !permission.granted) {
+  if (permission === null) {
+    return (
+      <View style={theme.screens}>
+        <Text style={theme.textColor}>Checking permission...</Text>
+      </View>
+    );
+  }
+  if (!permission.granted) {
     return (
       <View style={theme.screens}>
         <Text style={theme.textColor}>
           You must allow access to your photos
         </Text>
-        <BaseButton onPress={requestPermission} title="Grant permission"/>
+        <BaseButton onPress={requestPermission} title="Grant permission" />
       </View>
     );
   }
 
-  return (
-    <View style={[theme.screens, {paddingTop: 50}]}>
-      <FlatList
-        data={photos}
-        numColumns={3}
-        keyExtractor={(item) => item.id}
-        renderItem={({item}) => (
-          <TouchableOpacity onPress={() => openPhoto(item)}>
-            <Image 
-              source={{uri: item.uri}}
-              style={styles.thumbnail}
-              contentFit="cover"
-            />
-          </TouchableOpacity>
-        )}
-      />
-    </View>
-  );
+    return (
+      <View style={[theme.screens, { paddingTop: 50 }]}>
+        <FlatList
+          data={photos}
+          numColumns={3}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => openPhoto(item)}>
+              <Image
+                source={{ uri: item.uri }}
+                style={{...theme.gallery.thumbnail}}
+                contentFit="cover"
+              />
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    );
+  
 };
-
-const styles = StyleSheet.create({
-  thumbnail: {
-    width: 120,
-    height: 120,
-    margin: 2,
-    borderRadius: 4,
-  },
-  button: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: "white",
-    borderRadius: 6,
-  },
-});
 
 export default GalleryScreen;
