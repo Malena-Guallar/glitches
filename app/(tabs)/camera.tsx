@@ -1,8 +1,10 @@
+import { useTheme } from "@/theme/ThemeProvider";
+import { MaterialIcons } from "@expo/vector-icons";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 
 const CameraScreen = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -10,6 +12,7 @@ const CameraScreen = () => {
   const [uri, setUri] = useState<string | null>(null);
   const [facing, setFacing] = useState<CameraType>("back");
   const router = useRouter();
+  const theme = useTheme();
 
   if (!permission) {
     return <View />;
@@ -40,26 +43,35 @@ const CameraScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{...theme.camera.container}}>
       {uri ? (
         <View>
           <Image source={{ uri }} style={{ width: 300, aspectRatio: 1 }} />
           <Button onPress={() => setUri(null)} title="Take another pic" />
         </View>
       ) : (
-        <View style={styles.container}>
+        <View style={{...theme.camera.container}}>
           <CameraView
-            style={styles.camera}
+            style={{...theme.camera.camera}}
             facing={facing}
             ref={ref}
             mode="picture"
           />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={toggleFacing}>
-              <Text style={styles.text}>Flip Camera</Text>
+          <View style={{...theme.camera.buttonContainer}}>
+            <TouchableOpacity onPress={toggleFacing}>
+              <MaterialIcons
+                name="flip-camera-android"
+                size={30}
+                color="white"
+              />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={takePicture}>
-              <Text style={styles.text}>take pic</Text>
+            <TouchableOpacity onPress={takePicture}>
+              <View style={{ ...theme.camera.shutterBtn }}>
+                <View style={{ ...theme.camera.shutterBtnInner }}></View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/gallery")}>
+              <MaterialIcons name="photo-library" size={30} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -68,35 +80,5 @@ const CameraScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  message: {
-    textAlign: "center",
-    paddingBottom: 10,
-  },
-  camera: {
-    flex: 1,
-  },
-  buttonContainer: {
-    position: "absolute",
-    bottom: 64,
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    width: "100%",
-    paddingHorizontal: 64,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-  },
-});
 
 export default CameraScreen;
